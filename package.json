@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npx husky install",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,8 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.0",
     "eslint": "^10.6.0",
-    "globals": "^17.7.0"
+    "globals": "^17.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8"
   }
 }
