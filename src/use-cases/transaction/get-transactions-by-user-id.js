@@ -10,7 +10,7 @@ export class GetTransactionsByUserIdUseCase {
         const user = await this.getUserByIdRepository.execute(params.userId)
 
         if (!user) {
-            throw new UserNotFoundError()
+            throw new UserNotFoundError(params.userId)
         }
 
         return await this.getTransactionsByUserIdRepository.execute(
