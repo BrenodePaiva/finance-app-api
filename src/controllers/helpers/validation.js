@@ -5,7 +5,7 @@ export const checkIfIdIsValid = (id) => validator.isUUID(id)
 
 export const invalidIdResponse = () =>
     badRequest({
-        message: 'The provided user ID is not valid'
+        message: 'The provided ID is not valid'
     })
 
 export const requiredFieldIsMissingResponse = (field) => {
