@@ -1,6 +1,5 @@
 import { UserNotFoundError } from '../../errors/user.js'
-import { serverError, userNotFoundResponse } from '../helpers/index.js'
-import { ok } from '../helpers/http.js'
+import { serverError, userNotFoundResponse, ok } from '../helpers/index.js'
 import {
     checkIfIdIsValid,
     invalidIdResponse,
