@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
+        "test:watch": "jest --watch",
         "postinstall": "npx prisma generate",
         "prepare": "husky",
         "start:dev": "node --watch index.js"
@@ -22,6 +23,7 @@
         "eslint": "^10.6.0",
         "globals": "^17.7.0",
         "husky": "^9.1.7",
+        "jest": "^30.4.2",
         "lint-staged": "^17.0.8",
         "prettier": "^3.9.4",
         "prisma": "^7.8.0"

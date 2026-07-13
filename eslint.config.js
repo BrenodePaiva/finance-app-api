@@ -4,10 +4,15 @@ import json from '@eslint/json'
 import css from '@eslint/css'
 import { defineConfig } from 'eslint/config'
 
+const { jest } = globals
+
 export default defineConfig([
     {
+        ignores: ['node_modules/, dist/, env.d.ts']
+    },
+    {
         files: ['**/*.{js,mjs,cjs}'],
-        plugins: { js },
+        plugins: { js, jest },
         extends: ['js/recommended'],
         languageOptions: { globals: globals.node }
     },
