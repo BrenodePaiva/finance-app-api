@@ -5,9 +5,16 @@
 
 /** @type {import('jest').Config} */
 const config = {
+    transform: {
+        '^.+\\.[jt]sx?$': 'babel-jest'
+    },
+    transformIgnorePatterns: [
+        '/node_modules/(?!@faker-js)' // <- permite transformar faker
+    ],
+    testEnvironment: 'node',
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
-    testPathIgnorePatterns: ['/node_modules/', '/.postgres-data/'],
+    testPathIgnorePatterns: ['/.postgres-data/'],
     watchPathIgnorePatterns: ['/.postgres-data/'],
     modulePathIgnorePatterns: ['<rootDir>/.postgres-data']
 }
