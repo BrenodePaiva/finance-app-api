@@ -27,12 +27,25 @@ describe('CreateTransactionController', () => {
         }
     }
 
-    it('should return 201 when creating transaction successfuly', async () => {
+    it('should return 201 when creating transaction successfuly(EXPENSE)', async () => {
         // arrange
         const { sut } = makeSut()
 
         // act
         const result = await sut.execute(httpRequest)
+
+        // assert
+        expect(result.statusCode).toBe(201)
+    })
+
+    it('should return 201 when creating transaction successfuly(EARNING)', async () => {
+        // arrange
+        const { sut } = makeSut()
+
+        // act
+        const result = await sut.execute({
+            body: { ...httpRequest.body, type: 'EARNING' }
+        })
 
         // assert
         expect(result.statusCode).toBe(201)
