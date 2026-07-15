@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { DeleteUserController } from './delete-user'
 
-describe('Delete User Controller', () => {
+describe('DeleteUserController', () => {
     class DeleteUserUseCaseStub {
         async execute() {
             return {

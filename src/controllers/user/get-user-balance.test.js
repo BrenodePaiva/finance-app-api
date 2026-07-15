@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { GetUserBalanceController } from './get-user-balance'
 
-describe('Get User Balance', () => {
+describe('GetUserBalanceController', () => {
     class GetUserBalanceUseCaseStub {
         async execute() {
             return faker.finance.amount()
