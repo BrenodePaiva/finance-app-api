@@ -1,14 +1,12 @@
+import { ZodError } from 'zod'
 import {
     badRequest,
-    checkIfAmountIsValid,
     checkIfIdIsValid,
-    checkIfTypeIsValid,
-    invalidAmountResponse,
     invalidIdResponse,
-    invalidTypeResponse,
     ok,
     serverError
 } from '../helpers/index.js'
+import { updateTransactionSchema } from '../../schemas/transaction.js'
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -17,37 +15,15 @@ export class UpdateTransactionController {
     async execute(httpRequest) {
         try {
             const transactionId = httpRequest.params.transactionId
+
             const isIdValid = checkIfIdIsValid(transactionId)
             if (!isIdValid) {
                 return invalidIdResponse()
             }
 
             const params = httpRequest.body
-            const allowedFields = ['name', 'date', 'amount', 'type']
 
-            const someFieldIsNotAllowed = Object.keys(params).some(
-                (field) => !allowedFields.includes(field)
-            )
-
-            if (someFieldIsNotAllowed) {
-                return badRequest({
-                    message: 'Some provided fields are not allowed'
-                })
-            }
-
-            if (params.amount) {
-                const amountIsValid = checkIfAmountIsValid(params.amount)
-                if (!amountIsValid) {
-                    return invalidAmountResponse()
-                }
-            }
-
-            if (params.type) {
-                const typeIsValid = checkIfTypeIsValid(params.type)
-                if (!typeIsValid) {
-                    return invalidTypeResponse()
-                }
-            }
+            await updateTransactionSchema.parseAsync(params)
 
             const transaction = await this.updateTransactionUseCase.execute(
                 transactionId,
@@ -55,6 +31,16 @@ export class UpdateTransactionController {
             )
             return ok(transaction)
         } catch (error) {
+            if (error instanceof ZodError) {
+                if (error.issues[0].code === 'unrecognized_keys') {
+                    return badRequest({
+                        message: 'Some provided fields are not allowed.'
+                    })
+                }
+                return badRequest({
+                    message: error.issues[0].message
+                })
+            }
             console.error(error)
             return serverError()
         }
