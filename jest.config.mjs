@@ -14,6 +14,7 @@ const config = {
     testEnvironment: 'node',
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
+    collectCoverageFrom: ['src/**/*.js'],
     testPathIgnorePatterns: ['/.postgres-data/'],
     watchPathIgnorePatterns: ['/.postgres-data/'],
     modulePathIgnorePatterns: ['<rootDir>/.postgres-data']
