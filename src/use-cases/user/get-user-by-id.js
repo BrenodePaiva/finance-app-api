@@ -3,6 +3,6 @@ export class GetUserByIdUseCase {
         this.getUserByIdRepository = getUserByIdRepository
     }
     async execute(userId) {
-        return this.getUserByIdRepository.execute(userId)
+        return await this.getUserByIdRepository.execute(userId)
     }
 }
