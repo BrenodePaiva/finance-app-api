@@ -90,9 +90,7 @@ describe('CreateUserUseCase', () => {
         // arrange
         const { sut, idGeneratorAdapterStub, createUserRepositoryStub } =
             makeSut()
-
         const idGeneratorSpy = jest.spyOn(idGeneratorAdapterStub, 'execute')
-
         const createUserRepositorySpy = jest.spyOn(
             createUserRepositoryStub,
             'execute'
@@ -114,12 +112,10 @@ describe('CreateUserUseCase', () => {
         // arrange
         const { sut, passwordHasherAdapterStub, createUserRepositoryStub } =
             makeSut()
-
         const passwordHasherSpy = jest.spyOn(
             passwordHasherAdapterStub,
             'execute'
         )
-
         const createUserRepositorySpy = jest.spyOn(
             createUserRepositoryStub,
             'execute'
@@ -135,5 +131,20 @@ describe('CreateUserUseCase', () => {
             id: 'generated_id',
             password: 'hashed_password'
         })
+    })
+
+    it('should throw if GetUserByEmailRepository throws', async () => {
+        // arrange
+        const { sut, getUserByEmailRepositoryStub } = makeSut()
+        jest.spyOn(
+            getUserByEmailRepositoryStub,
+            'execute'
+        ).mockRejectedValueOnce(new Error())
+
+        // act
+        const promise = sut.execute(params)
+
+        // assert
+        expect(promise).rejects.toThrow()
     })
 })
