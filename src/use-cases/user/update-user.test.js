@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { UpdateUserUseCase } from './update-user'
+import { EmailAlreadyInUseError } from '../../errors/user'
 
 describe('UpdateUserUseCase', () => {
     const user = {
@@ -91,5 +92,39 @@ describe('UpdateUserUseCase', () => {
         // assert
         expect(executeSpy).toHaveBeenCalledWith(user.password)
         expect(result).toBe(user)
+    })
+
+    it('should throw EmailAlreadyInUseError if email is already in use', async () => {
+        // arrange
+        const { sut, getUserByEmailRepositoryStub } = makeSut()
+        jest.spyOn(
+            getUserByEmailRepositoryStub,
+            'execute'
+        ).mockResolvedValueOnce(user)
+
+        // act
+        const result = sut.execute(faker.string.uuid(), {
+            email: faker.internet.email()
+        })
+
+        // assert
+        expect(result).rejects.toThrow()
+    })
+
+    it('should throw EmailAlreadyInUseError if email is already in use', async () => {
+        // arrange
+        const { sut, getUserByEmailRepositoryStub } = makeSut()
+        jest.spyOn(
+            getUserByEmailRepositoryStub,
+            'execute'
+        ).mockResolvedValueOnce(user)
+
+        // act
+        const result = sut.execute(faker.string.uuid(), {
+            email: user.email
+        })
+
+        // assert
+        expect(result).rejects.toThrow(new EmailAlreadyInUseError(user.email))
     })
 })
