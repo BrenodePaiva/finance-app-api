@@ -69,4 +69,16 @@ describe('CreateTransactionUseCase', () => {
         // assert
         expect(result).toEqual({ ...params, id: 'random_id' })
     })
+
+    it('should call GetUserByEmailRepository with correct params', async () => {
+        // arrange
+        const { sut, getUserByIdRepositoryStub } = makeSut()
+        const executeSpy = jest.spyOn(getUserByIdRepositoryStub, 'execute')
+
+        // act
+        await sut.execute(params)
+
+        // assert
+        expect(executeSpy).toHaveBeenCalledWith(params.user_id)
+    })
 })
