@@ -62,4 +62,19 @@ describe('UpdateTransaction', () => {
             amount: transaction.amount
         })
     })
+
+    it('should throw if UpdateTransactionRepository throws', async () => {
+        // arrange
+        const { sut, updateTransactionRepositoryStub } = makeSut()
+        jest.spyOn(
+            updateTransactionRepositoryStub,
+            'execute'
+        ).mockRejectedValueOnce(new Error())
+
+        // act
+        const promise = sut.execute(transaction.id)
+
+        // assert
+        expect(promise).rejects.toThrow()
+    })
 })
