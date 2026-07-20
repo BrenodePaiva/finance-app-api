@@ -120,12 +120,12 @@ describe('UpdateUserUseCase', () => {
         ).mockResolvedValueOnce(user)
 
         // act
-        const result = sut.execute(faker.string.uuid(), {
+        const promise = sut.execute(faker.string.uuid(), {
             email: user.email
         })
 
         // assert
-        expect(result).rejects.toThrow(new EmailAlreadyInUseError(user.email))
+        expect(promise).rejects.toThrow(new EmailAlreadyInUseError(user.email))
     })
 
     it('should call UpdateUserRepository with correct params', async () => {
@@ -147,5 +147,22 @@ describe('UpdateUserUseCase', () => {
             ...updateParams,
             password: 'hashed_password'
         })
+    })
+
+    it('should throw if GetUserByEmailRepository throws', async () => {
+        // arrange
+        const { sut, getUserByEmailRepositoryStub } = makeSut()
+        jest.spyOn(
+            getUserByEmailRepositoryStub,
+            'execute'
+        ).mockRejectedValueOnce(new Error())
+
+        // act
+        const promise = sut.execute(faker.string.uuid(), {
+            email: user.email
+        })
+
+        // assert
+        expect(promise).rejects.toThrow()
     })
 })
