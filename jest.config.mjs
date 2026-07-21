@@ -5,12 +5,12 @@
 
 /** @type {import('jest').Config} */
 const config = {
+    setupFiles: ['./jest.setup.js'],
     transform: {
         '^.+\\.[jt]sx?$': 'babel-jest'
     },
-    transformIgnorePatterns: [
-        '/node_modules/(?!@faker-js)' // <- permite transformar faker
-    ],
+    transformIgnorePatterns: ['/node_modules/(?!(@faker-js|@prisma))'],
+    extensionsToTreatAsEsm: ['.ts', '.tsx'],
     testEnvironment: 'node',
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',

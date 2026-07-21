@@ -7,6 +7,7 @@
         "test": "jest --passWithNoTests --silent",
         "test:watch": "jest --watch --passWithNoTests",
         "test:coverage": "jest --passWithNoTests --silent --coverage",
+        "test:prisma": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch --passWithNoTests",
         "postinstall": "npx prisma generate",
         "prepare": "husky",
         "start:dev": "node --watch index.js"
@@ -18,6 +19,7 @@
     "devDependencies": {
         "@babel/core": "^8.0.1",
         "@babel/preset-env": "^8.0.2",
+        "@babel/preset-typescript": "^8.0.1",
         "@commitlint/cli": "^21.2.0",
         "@commitlint/config-conventional": "^21.2.0",
         "@eslint/css": "^1.3.0",
