@@ -21,7 +21,7 @@ describe('CreateTransactionUseCase', () => {
     }
 
     class CreateTransactionRepositoryStub {
-        async execute(transaction) {
+        async execute() {
             return transaction
         }
     }
@@ -56,7 +56,7 @@ describe('CreateTransactionUseCase', () => {
         const result = await sut.execute(params)
 
         // assert
-        expect(result).toEqual({ ...params, id: 'random_id' })
+        expect(result).toEqual(transaction)
     })
 
     it('should call GetUserByEmailRepository with correct params', async () => {
