@@ -1,8 +1,12 @@
-import { faker } from '@faker-js/faker'
 import { CreateUserUseCase } from './create-user'
 import { EmailAlreadyInUseError } from '../../errors/user'
+import { user as fixtureUser } from '../../tests'
 
 describe('CreateUserUseCase', () => {
+    const user = {
+        ...fixtureUser,
+        id: undefined
+    }
     class GetUserByEmailRepositoryStub {
         async execute() {
             return null
@@ -52,19 +56,12 @@ describe('CreateUserUseCase', () => {
         }
     }
 
-    const params = {
-        first_name: faker.person.firstName(),
-        last_name: faker.person.lastName(),
-        email: faker.internet.email(),
-        password: faker.internet.password({ length: 7 })
-    }
-
     it('should successfully create a user', async () => {
         // arrange
         const { sut } = makeSut()
 
         // act
-        const createUser = await sut.execute(params)
+        const createUser = await sut.execute(user)
 
         // assert
         expect(createUser).toBeTruthy()
@@ -74,16 +71,14 @@ describe('CreateUserUseCase', () => {
         // arrange
         const { sut, getUserByEmailRepositoryStub } = makeSut()
         jest.spyOn(getUserByEmailRepositoryStub, 'execute').mockReturnValueOnce(
-            params
+            user
         )
 
         // act
-        const promise = sut.execute(params)
+        const promise = sut.execute(user)
 
         // assert
-        expect(promise).rejects.toThrow(
-            new EmailAlreadyInUseError(params.email)
-        )
+        expect(promise).rejects.toThrow(new EmailAlreadyInUseError(user.email))
     })
 
     it('should call IdGeneratorAdapter to generate a random id', async () => {
@@ -97,12 +92,12 @@ describe('CreateUserUseCase', () => {
         )
 
         // act
-        await sut.execute(params)
+        await sut.execute(user)
 
         // assert
         expect(idGeneratorSpy).toHaveBeenCalled()
         expect(createUserRepositorySpy).toHaveBeenCalledWith({
-            ...params,
+            ...user,
             id: 'generated_id',
             password: 'hashed_password'
         })
@@ -122,12 +117,12 @@ describe('CreateUserUseCase', () => {
         )
 
         // act
-        await sut.execute(params)
+        await sut.execute(user)
 
         // assert
-        expect(passwordHasherSpy).toHaveBeenCalledWith(params.password)
+        expect(passwordHasherSpy).toHaveBeenCalledWith(user.password)
         expect(createUserRepositorySpy).toHaveBeenCalledWith({
-            ...params,
+            ...user,
             id: 'generated_id',
             password: 'hashed_password'
         })
@@ -142,7 +137,7 @@ describe('CreateUserUseCase', () => {
         ).mockRejectedValueOnce(new Error())
 
         // act
-        const promise = sut.execute(params)
+        const promise = sut.execute(user)
 
         // assert
         expect(promise).rejects.toThrow()
@@ -158,7 +153,7 @@ describe('CreateUserUseCase', () => {
         )
 
         // act
-        const promise = sut.execute(params)
+        const promise = sut.execute(user)
 
         // assert
         expect(promise).rejects.toThrow()
@@ -172,7 +167,7 @@ describe('CreateUserUseCase', () => {
         )
 
         // act
-        const promise = sut.execute(params)
+        const promise = sut.execute(user)
 
         // assert
         expect(promise).rejects.toThrow()
@@ -186,7 +181,7 @@ describe('CreateUserUseCase', () => {
         )
 
         // act
-        const promise = sut.execute(params)
+        const promise = sut.execute(user)
 
         // assert
         expect(promise).rejects.toThrow()
