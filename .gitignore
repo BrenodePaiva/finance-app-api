@@ -3,6 +3,7 @@ node_modules
 
 # Evironment variables
 .env
+.env.test
 
 # Postgres volume
 .postgres-data
