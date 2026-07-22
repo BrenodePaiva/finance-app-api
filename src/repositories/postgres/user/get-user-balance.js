@@ -44,7 +44,7 @@ export class PostgresGetUserBalanceRepository {
         const _totalInvestiments = totalInvestiments || Prisma.Decimal(0)
 
         const balance = Prisma.Decimal(
-            totalEarnings - _totalExpenses - _totalInvestiments
+            _totalEarnings - _totalExpenses - _totalInvestiments
         )
 
         return {
