@@ -15,7 +15,7 @@ describe('PostgresGetUserByIdRepository', () => {
         expect(result).toStrictEqual(user)
     })
 
-    it('should Prisma with correct params', async () => {
+    it('should call Prisma with correct params', async () => {
         const sut = new PostgresGetUserByIdRepository()
 
         const prismaSpy = jest.spyOn(prisma.user, 'findUnique')
