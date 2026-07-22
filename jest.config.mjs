@@ -6,6 +6,7 @@
 /** @type {import('jest').Config} */
 const config = {
     globalSetup: '<rootDir>/jest.global-setup.js',
+    setupFilesAfterEnv: ['<rootDir>/jest.setup-after-env.js'],
     setupFiles: ['./jest.setup.js'],
     transform: {
         '^.+\\.[jt]sx?$': 'babel-jest'

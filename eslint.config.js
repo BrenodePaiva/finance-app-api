@@ -15,7 +15,7 @@ export default defineConfig([
         languageOptions: { globals: globals.node }
     },
     {
-        files: ['**/*.test.{js,ts}'],
+        files: ['**/*.test.{js,ts}', '**/jest.*.{js,ts}'],
         languageOptions: {
             globals: {
                 ...globals.jest
