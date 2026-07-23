@@ -110,7 +110,7 @@ describe('PostgresGetUserBalanceRepository', () => {
         const sut = new PostgresGetUserBalanceRepository()
         jest.spyOn(prisma.user, 'aggregate').mockRejectedValueOnce(new Error())
 
-        const promise = sut.execute(fakeUser.id)
+        const promise = sut.execute({ user_id: fakeUser.id })
 
         expect(promise).rejects.toThrow()
     })
