@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "dotenv -e .env.test -- node --experimental-vm-modules ./node_modules/jest/bin/jest.js --passWithNoTests",
+        "test": "dotenv -e .env.test -- node --experimental-vm-modules ./node_modules/jest/bin/jest.js --passWithNoTests --runInBand",
         "test:all": "npm run test -- --silent",
         "test:watch": "npm run test -- --watch",
         "test:coverage": "npm run test -- --silent --coverage",
