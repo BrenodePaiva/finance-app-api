@@ -23,16 +23,16 @@ describe('PostgresUpdateTransactionRepository', () => {
 
         const result = await sut.execute(transaction.id, params)
 
-        expect(result.id).toBe(params.id)
-        expect(result.user_id).toBe(params.user_id)
-        expect(result.name).toBe(params.name)
-        expect(String(result.amount)).toBe(String(params.amount))
-        expect(result.type).toBe(params.type)
-        expect(dayjs(result.date).daysInMonth()).toBe(
+        expect(result.id).toEqual(params.id)
+        expect(result.user_id).toEqual(params.user_id)
+        expect(result.name).toEqual(params.name)
+        expect(String(result.amount)).toEqual(String(params.amount))
+        expect(result.type).toEqual(params.type)
+        expect(dayjs(result.date).daysInMonth()).toEqual(
             dayjs(params.date).daysInMonth()
         )
-        expect(dayjs(result.date).month()).toBe(dayjs(params.date).month())
-        expect(dayjs(result.date).year()).toBe(dayjs(params.date).year())
+        expect(dayjs(result.date).month()).toEqual(dayjs(params.date).month())
+        expect(dayjs(result.date).year()).toEqual(dayjs(params.date).year())
     })
 
     it('should call Prisma with correct params', async () => {
