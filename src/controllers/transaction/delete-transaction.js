@@ -1,3 +1,4 @@
+import { TransactionNotFoundError } from '../../errors/index.js'
 import {
     ok,
     serverError,
@@ -21,12 +22,12 @@ export class DeleteTransactioController {
             const deletedTransaction =
                 await this.deleteTransactioUseCase.execute(transactionId)
 
-            if (!deletedTransaction) {
+            return ok(deletedTransaction)
+        } catch (error) {
+            if (error instanceof TransactionNotFoundError) {
                 return transactionNotFoundResponse()
             }
 
-            return ok(deletedTransaction)
-        } catch (error) {
             console.error(error)
             return serverError()
         }
