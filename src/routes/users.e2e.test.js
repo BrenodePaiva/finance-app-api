@@ -2,6 +2,7 @@ import request from 'supertest'
 import { user } from '../tests'
 import { app } from '../app'
 import { faker } from '@faker-js/faker'
+import { TransactionType } from '../generated/prisma/enums'
 
 describe('User Router E2E Tests', () => {
     it('POST /api/users should return 201 when user is created', async () => {
@@ -68,5 +69,53 @@ describe('User Router E2E Tests', () => {
 
         expect(response.status).toBe(200)
         expect(response.body).toEqual(createdUser)
+    })
+
+    it('GET /api/users/:userId/balance should return 200 and correct balance', async () => {
+        const { body: createdUser } = await request(app)
+            .post('/api/users')
+            .send({
+                ...user,
+                id: undefined
+            })
+        await request(app)
+            .post('/api/transactions')
+            .send({
+                user_id: createdUser.id,
+                name: faker.string.alpha(10),
+                date: faker.date.anytime().toISOString(),
+                amount: 10000,
+                type: TransactionType.EARNING
+            })
+        await request(app)
+            .post('/api/transactions')
+            .send({
+                user_id: createdUser.id,
+                name: faker.string.alpha(10),
+                date: faker.date.anytime().toISOString(),
+                amount: 2000,
+                type: TransactionType.EXPENSE
+            })
+        await request(app)
+            .post('/api/transactions')
+            .send({
+                user_id: createdUser.id,
+                name: faker.string.alpha(10),
+                date: faker.date.anytime().toISOString(),
+                amount: 2000,
+                type: TransactionType.INVESTMENT
+            })
+
+        const response = await request(app).get(
+            `/api/users/${createdUser.id}/balance`
+        )
+
+        expect(response.status).toBe(200)
+        expect(response.body).toEqual({
+            earnings: '10000',
+            expenses: '2000',
+            investiments: '2000',
+            balance: '6000'
+        })
     })
 })
