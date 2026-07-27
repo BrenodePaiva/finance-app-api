@@ -4,9 +4,11 @@ import {
     checkIfIdIsValid,
     invalidIdResponse,
     ok,
-    serverError
+    serverError,
+    transactionNotFoundResponse
 } from '../helpers/index.js'
 import { updateTransactionSchema } from '../../schemas/transaction.js'
+import { TransactionNotFoundError } from '../../errors/transaction.js'
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -31,6 +33,10 @@ export class UpdateTransactionController {
             )
             return ok(transaction)
         } catch (error) {
+            if (error instanceof TransactionNotFoundError) {
+                return transactionNotFoundResponse()
+            }
+
             if (error instanceof ZodError) {
                 if (error.issues[0].code === 'unrecognized_keys') {
                     return badRequest({
