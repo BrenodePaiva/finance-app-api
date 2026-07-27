@@ -151,7 +151,7 @@ describe('UpdateUserController', () => {
         // arrange
         const { sut, updateUserUseCaseStub } = makeSut()
         jest.spyOn(updateUserUseCaseStub, 'execute').mockRejectedValueOnce(
-            new UserNotFoundError(faker.internet.email())
+            new UserNotFoundError(faker.string.uuid())
         )
 
         // act
