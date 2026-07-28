@@ -198,6 +198,43 @@
         },
 
         "/api/transactions": {
+            "get": {
+                "summary": "Get transactions by user ID",
+                "tags": ["Transaction"],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "query",
+                        "type": "string",
+                        "description": "ID of the user to get transactions"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transactions found",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+
             "post": {
                 "summary": "Create a new transaction",
                 "tags": ["Transaction"],
