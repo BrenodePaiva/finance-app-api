@@ -4,5 +4,83 @@
         "title": "FSC Finance App API",
         "description": "API for FSC Finance App that allows users to manage their finances.",
         "version": "1.0.0"
+    },
+    "paths": {
+        "/api/users": {
+            "post": {
+                "summary": "Create a new user",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid params"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CreateUserParams": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "example": "Jhon"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Dom"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "jhon@dom.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password"
+                }
+            }
+        },
+
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "e7f1cecc-da48-4999-bd14-5e0767325a43"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "Jhon"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Dom"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "jhon@dom.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password"
+                }
+            }
+        }
     }
 }
