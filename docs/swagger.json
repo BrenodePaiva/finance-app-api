@@ -300,7 +300,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Updated Transactions successfully",
+                        "description": "Updated Transaction successfully",
                         "schema": {
                             "$ref": "#/definitions/Transaction"
                         }
@@ -309,6 +309,40 @@
                         "description": "Invalid params",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction not found",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+
+            "delete": {
+                "summary": "Delete transaction by ID",
+                "tags": ["Transaction"],
+                "parameters": [
+                    {
+                        "name": "transactionId",
+                        "required": true,
+                        "in": "path",
+                        "type": "string",
+                        "description": "ID of the transaction to delete"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction Deleted successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
                         }
                     },
                     "404": {
@@ -429,8 +463,8 @@
                     "example": "2026-12-15T17:08:26.189Z"
                 },
                 "amount": {
-                    "type": "number",
-                    "example": 1000
+                    "type": "string",
+                    "example": "1000"
                 },
                 "type": {
                     "type": "string",
