@@ -416,19 +416,23 @@
             "properties": {
                 "first_name": {
                     "type": "string",
-                    "example": "Jhon"
+                    "example": "Jhon",
+                    "required": true
                 },
                 "last_name": {
                     "type": "string",
-                    "example": "Dom"
+                    "example": "Dom",
+                    "required": true
                 },
                 "email": {
                     "type": "string",
-                    "example": "jhon@dom.com"
+                    "example": "jhon@dom.com",
+                    "required": true
                 },
                 "password": {
                     "type": "string",
-                    "example": "password"
+                    "example": "password",
+                    "required": true
                 }
             }
         },
@@ -479,24 +483,29 @@
             "properties": {
                 "user_id": {
                     "type": "string",
-                    "example": "e7f1cecc-da48-4999-bd14-5e0767325a43"
+                    "example": "e7f1cecc-da48-4999-bd14-5e0767325a43",
+                    "required": true
                 },
                 "name": {
                     "type": "string",
-                    "example": "Salary"
+                    "example": "Salary",
+                    "required": true
                 },
                 "date": {
                     "type": "string",
-                    "example": "2026-12-15T17:08:26.189Z"
+                    "example": "2026-12-15T17:08:26.189Z",
+                    "required": true
                 },
                 "amount": {
                     "type": "number",
-                    "example": 1000
+                    "example": 1000,
+                    "required": true
                 },
                 "type": {
                     "type": "string",
                     "example": "EARNING",
-                    "description": "EARNING, EXPENSE, INVESTMENT"
+                    "description": "EARNING, EXPENSE, INVESTMENT",
+                    "required": true
                 }
             }
         },
