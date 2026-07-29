@@ -30,7 +30,7 @@ describe('PostgresUpdateTransactionRepository', () => {
         expect(result.name).toEqual(params.name)
         expect(String(result.amount)).toEqual(String(params.amount))
         expect(result.type).toEqual(params.type)
-        expect(dayjs(result.date).daysInMonth()).toEqual(
+        expect(dayjs(result.date).daysInMonth()).toBe(
             dayjs(params.date).daysInMonth()
         )
         expect(dayjs(result.date).month()).toEqual(dayjs(params.date).month())
