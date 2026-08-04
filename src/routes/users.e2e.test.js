@@ -168,4 +168,22 @@ describe('User Router E2E Tests', () => {
 
         expect(response.status).toBe(400)
     })
+
+    it('POST /api/users/login should return 200 and tokens when user credential are valid', async () => {
+        const { body: createdUser } = await request(app)
+            .post('/api/users')
+            .send({
+                ...user,
+                id: undefined
+            })
+
+        const response = await request(app).post('/api/users/login').send({
+            email: createdUser.email,
+            password: user.password
+        })
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.tokens.accessToken).toBeDefined()
+        expect(response.body.tokens.refreshToken).toBeDefined()
+    })
 })
