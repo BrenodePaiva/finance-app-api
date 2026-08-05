@@ -26,7 +26,7 @@ export class LoginUserUseCase {
             throw new InvalidPasswordError()
         }
 
-        const tokens = this.tokensGeneratorAdapter.execute({ userId: user.id })
+        const tokens = this.tokensGeneratorAdapter.execute(user.id)
 
         return {
             ...user,
