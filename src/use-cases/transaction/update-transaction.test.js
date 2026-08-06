@@ -3,6 +3,11 @@ import { UpdateTransactionUseCase } from './update-transaction'
 import { transaction } from '../../tests'
 
 describe('UpdateTransaction', () => {
+    class GetTransactionByIdRepositoryStub {
+        async execute() {
+            return transaction
+        }
+    }
     class UpdateTransactionRepositoryStub {
         async execute() {
             return transaction
@@ -10,15 +15,20 @@ describe('UpdateTransaction', () => {
     }
 
     const makeSut = () => {
+        const getTransactionByIdRepositoryStub =
+            new GetTransactionByIdRepositoryStub()
+
         const updateTransactionRepositoryStub =
             new UpdateTransactionRepositoryStub()
 
         const sut = new UpdateTransactionUseCase(
+            getTransactionByIdRepositoryStub,
             updateTransactionRepositoryStub
         )
 
         return {
             sut,
+            getTransactionByIdRepositoryStub,
             updateTransactionRepositoryStub
         }
     }

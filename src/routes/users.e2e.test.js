@@ -83,6 +83,7 @@ describe('User Router E2E Tests', () => {
             })
         await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
@@ -92,6 +93,7 @@ describe('User Router E2E Tests', () => {
             })
         await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
@@ -101,6 +103,7 @@ describe('User Router E2E Tests', () => {
             })
         await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
