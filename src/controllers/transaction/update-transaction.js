@@ -2,13 +2,14 @@ import { ZodError } from 'zod'
 import {
     badRequest,
     checkIfIdIsValid,
+    forbidden,
     invalidIdResponse,
     ok,
     serverError,
     transactionNotFoundResponse
 } from '../helpers/index.js'
 import { updateTransactionSchema } from '../../schemas/transaction.js'
-import { TransactionNotFoundError } from '../../errors/transaction.js'
+import { ForbiddenError, TransactionNotFoundError } from '../../errors/index.js'
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -37,12 +38,11 @@ export class UpdateTransactionController {
                 return transactionNotFoundResponse()
             }
 
+            if (error instanceof ForbiddenError) {
+                return forbidden()
+            }
+
             if (error instanceof ZodError) {
-                if (error.issues[0].code === 'unrecognized_keys') {
-                    return badRequest({
-                        message: 'Some provided fields are not allowed.'
-                    })
-                }
                 return badRequest({
                     message: error.issues[0].message
                 })
