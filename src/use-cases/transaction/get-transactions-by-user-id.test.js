@@ -77,12 +77,14 @@ describe('GetTransactionsByUserId', () => {
             getTransactionsByUserIdRepositoryStub,
             'execute'
         )
+        const from = '2026-01-01'
+        const to = '2026-01-31'
 
         // act
-        await sut.execute(user.id)
+        await sut.execute(user.id, from, to)
 
         // assert
-        expect(executeSpy).toHaveBeenCalledWith(user.id)
+        expect(executeSpy).toHaveBeenCalledWith(user.id, from, to)
     })
 
     it('should throw GetUserByIdRepository throws', async () => {
