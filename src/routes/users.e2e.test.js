@@ -5,6 +5,9 @@ import { faker } from '@faker-js/faker'
 import { TransactionType } from '../generated/prisma/enums'
 
 describe('User Router E2E Tests', () => {
+    const from = '2026-01-01'
+    const to = '2026-01-31'
+
     it('POST /api/users should return 201 when user is created', async () => {
         const response = await request(app)
             .post('/api/users')
@@ -87,7 +90,7 @@ describe('User Router E2E Tests', () => {
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
-                date: faker.date.anytime().toISOString(),
+                date: new Date(from),
                 amount: 10000,
                 type: TransactionType.EARNING
             })
@@ -97,7 +100,7 @@ describe('User Router E2E Tests', () => {
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
-                date: faker.date.anytime().toISOString(),
+                date: new Date(to),
                 amount: 2000,
                 type: TransactionType.EXPENSE
             })
@@ -107,13 +110,13 @@ describe('User Router E2E Tests', () => {
             .send({
                 user_id: createdUser.id,
                 name: faker.string.alpha(10),
-                date: faker.date.anytime().toISOString(),
+                date: new Date(from),
                 amount: 2000,
                 type: TransactionType.INVESTMENT
             })
 
         const response = await request(app)
-            .get('/api/users/balance')
+            .get(`/api/users/balance?from=${from}&to=${to}`)
             .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
 
         expect(response.status).toBe(200)

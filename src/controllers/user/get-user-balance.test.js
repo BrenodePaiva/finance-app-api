@@ -19,6 +19,10 @@ describe('GetUserBalanceController', () => {
     const httpRequest = {
         params: {
             userId: faker.string.uuid()
+        },
+        query: {
+            from: '2026-01-01',
+            to: '2026-01-31'
         }
     }
 
@@ -39,7 +43,8 @@ describe('GetUserBalanceController', () => {
 
         // act
         const result = await sut.execute({
-            params: { userId: 'invalid_id' }
+            params: { userId: 'invalid_id' },
+            query: { from: '2026-01-01', to: '2026-01-31' }
         })
 
         // assert
@@ -69,7 +74,11 @@ describe('GetUserBalanceController', () => {
         await sut.execute(httpRequest)
 
         // assert
-        expect(executeSpy).toHaveBeenCalledWith(httpRequest.params.userId)
+        expect(executeSpy).toHaveBeenCalledWith(
+            httpRequest.params.userId,
+            httpRequest.query.from,
+            httpRequest.query.to
+        )
     })
 
     it('should return 404 if GetUserBalanceUseCase throws UserNotFoundError', async () => {
