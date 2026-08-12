@@ -36,3 +36,9 @@ export const refreshTokenSchema = z.object({
         .trim()
         .min(1, { error: 'Refresh token is required.' })
 })
+
+export const getUserBalanceSchema = z.object({
+    user_id: z.uuid({ error: 'User ID must be a valid UUID.' }),
+    from: z.iso.date({ error: 'Date must be a valid date.' }),
+    to: z.iso.date({ error: 'Date must be a valid date.' })
+})
