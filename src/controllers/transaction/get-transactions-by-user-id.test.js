@@ -102,11 +102,14 @@ describe('GetTransactionsByUserIdController', () => {
             getTransactionsByUserIdUseCaseStub,
             'execute'
         )
+        const userId = httpRequest.query.userId
+        const from = httpRequest.query.from
+        const to = httpRequest.query.to
 
         // act
         await sut.execute(httpRequest)
 
         // assert
-        expect(executeSpy).toHaveBeenCalledWith(httpRequest.query.userId)
+        expect(executeSpy).toHaveBeenCalledWith(userId, from, to)
     })
 })
