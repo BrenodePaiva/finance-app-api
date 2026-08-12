@@ -4,6 +4,9 @@ import { transaction, user } from '../tests'
 import { TransactionType } from '../generated/prisma/enums'
 
 describe('Transactions Routes E2E Tests', () => {
+    const from = '2026-01-01'
+    const to = '2026-01-31'
+
     it('POST /api/transactions should return 201 when creating a transaction successfully', async () => {
         const { body: createdUser } = await request(app)
             .post('/api/users')
@@ -30,7 +33,7 @@ describe('Transactions Routes E2E Tests', () => {
             .send({ ...transaction, id: undefined, user_id: createdUser.id })
 
         const response = await request(app)
-            .get('/api/transactions')
+            .get(`/api/transactions?from=${from}&to=${to}`)
             .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
 
         expect(response.status).toBe(200)
