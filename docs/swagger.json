@@ -547,6 +547,18 @@
                     "type": "string",
                     "example": "2000"
                 },
+                "earningsPercentage": {
+                    "type": "string",
+                    "example": "71"
+                },
+                "expensesPrecentage": {
+                    "type": "string",
+                    "example": "14"
+                },
+                "investimentsPercentage": {
+                    "type": "string",
+                    "example": "14"
+                },
                 "balance": {
                     "type": "string",
                     "example": "6000"
