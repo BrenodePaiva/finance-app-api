@@ -43,14 +43,33 @@ export class PostgresGetUserBalanceRepository {
         const _totalExpenses = totalExpenses || Prisma.Decimal(0)
         const _totalInvestiments = totalInvestiments || Prisma.Decimal(0)
 
-        const balance = Prisma.Decimal(
-            _totalEarnings - _totalExpenses - _totalInvestiments
-        )
+        const total = _totalEarnings
+            .plus(_totalExpenses)
+            .plus(_totalInvestiments)
+
+        const balance = _totalEarnings
+            .minus(_totalExpenses)
+            .minus(_totalInvestiments)
+
+        const earningsPercentage = total.isZero()
+            ? 0
+            : _totalEarnings.div(total).times(100).floor()
+
+        const expensesPrecentage = total.isZero()
+            ? 0
+            : _totalExpenses.div(total).times(100).floor()
+
+        const investimentsPercentage = total.isZero()
+            ? 0
+            : _totalInvestiments.div(total).times(100).floor()
 
         return {
             earnings: _totalEarnings,
             expenses: _totalExpenses,
             investiments: _totalInvestiments,
+            earningsPercentage,
+            expensesPrecentage,
+            investimentsPercentage,
             balance
         }
     }
