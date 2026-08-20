@@ -41,7 +41,7 @@ describe('DeleteTransactioController', () => {
 
         // act
         const result = await sut.execute({
-            params: { transactionId: 'invalid_id' }
+            params: { transactionId: 'invalid_id', user_id: 'invalid_id' }
         })
 
         // assert
