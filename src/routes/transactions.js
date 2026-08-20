@@ -9,7 +9,7 @@ import { auth } from '../middleware/auth.js'
 
 export const transactionsRouter = Router()
 
-transactionsRouter.get('/', auth, async (request, response) => {
+transactionsRouter.get('/me', auth, async (request, response) => {
     const getTransactionsByUserIdController =
         makeGetTransactionsByUserIdController()
     const { statusCode, body } =
@@ -25,7 +25,7 @@ transactionsRouter.get('/', auth, async (request, response) => {
     response.status(statusCode).send(body)
 })
 
-transactionsRouter.post('/', auth, async (request, response) => {
+transactionsRouter.post('/me', auth, async (request, response) => {
     const createTransactionController = makeCreateTransactionController()
     const { statusCode, body } = await createTransactionController.execute({
         ...request,
@@ -37,20 +37,24 @@ transactionsRouter.post('/', auth, async (request, response) => {
     response.status(statusCode).send(body)
 })
 
-transactionsRouter.patch('/:transactionId', auth, async (request, response) => {
-    const updateTransactionController = makeUpdateTransactionController()
-    const { statusCode, body } = await updateTransactionController.execute({
-        ...request,
-        body: {
-            ...request.body,
-            user_id: request.userId
-        }
-    })
-    response.status(statusCode).send(body)
-})
+transactionsRouter.patch(
+    '/me/:transactionId',
+    auth,
+    async (request, response) => {
+        const updateTransactionController = makeUpdateTransactionController()
+        const { statusCode, body } = await updateTransactionController.execute({
+            ...request,
+            body: {
+                ...request.body,
+                user_id: request.userId
+            }
+        })
+        response.status(statusCode).send(body)
+    }
+)
 
 transactionsRouter.delete(
-    '/:transactionId',
+    '/me/:transactionId',
     auth,
     async (request, response) => {
         const deleteTransactionController = makeDeleteTransactionController()
