@@ -595,15 +595,18 @@
         },
 
         "LoginUserParams": {
-            "email": {
-                "type": "string",
-                "example": "jhon@dom.com",
-                "required": true
-            },
-            "password": {
-                "type": "string",
-                "example": "password",
-                "required": true
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "jhon@dom.com",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password",
+                    "required": true
+                }
             }
         },
 
