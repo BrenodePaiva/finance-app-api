@@ -19,7 +19,8 @@ describe('DeleteTransactioController', () => {
 
     const httpRequest = {
         params: {
-            transactionId: faker.string.uuid()
+            transactionId: faker.string.uuid(),
+            user_id: faker.string.uuid()
         }
     }
 
@@ -89,7 +90,8 @@ describe('DeleteTransactioController', () => {
 
         // assert
         expect(executeSpy).toHaveBeenCalledWith(
-            httpRequest.params.transactionId
+            httpRequest.params.transactionId,
+            httpRequest.params.user_id
         )
     })
 })
