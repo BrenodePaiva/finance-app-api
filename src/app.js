@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express'
 import { usersRouter, transactionsRouter } from './routes/index.js'
 import swaggerUi from 'swagger-ui-express'
@@ -7,6 +8,8 @@ import path from 'path'
 export const app = express()
 
 app.use(express.json())
+
+app.use(cors({ origin: process.env.CORS_ORIGIN }))
 
 app.use('/api/users', usersRouter)
 
