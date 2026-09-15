@@ -2,13 +2,21 @@ import { prisma } from '../../../../prisma/prisma.js'
 import { Prisma, TransactionType } from '../../../generated/prisma/client.ts'
 
 export class PostgresGetUserBalanceRepository {
-    async execute(userId) {
+    async execute(userId, from, to) {
+        const dateFilter = {
+            date: {
+                gte: new Date(from),
+                lte: new Date(to)
+            }
+        }
+
         const {
             _sum: { amount: totalEarnings }
         } = await prisma.transaction.aggregate({
             where: {
                 user_id: userId,
-                type: TransactionType.EARNING
+                type: TransactionType.EARNING,
+                ...dateFilter
             },
             _sum: {
                 amount: true
@@ -20,7 +28,8 @@ export class PostgresGetUserBalanceRepository {
         } = await prisma.transaction.aggregate({
             where: {
                 user_id: userId,
-                type: TransactionType.EXPENSE
+                type: TransactionType.EXPENSE,
+                ...dateFilter
             },
             _sum: {
                 amount: true
@@ -32,7 +41,8 @@ export class PostgresGetUserBalanceRepository {
         } = await prisma.transaction.aggregate({
             where: {
                 user_id: userId,
-                type: TransactionType.INVESTMENT
+                type: TransactionType.INVESTMENT,
+                ...dateFilter
             },
             _sum: {
                 amount: true
@@ -55,7 +65,7 @@ export class PostgresGetUserBalanceRepository {
             ? 0
             : _totalEarnings.div(total).times(100).floor()
 
-        const expensesPrecentage = total.isZero()
+        const expensesPercentage = total.isZero()
             ? 0
             : _totalExpenses.div(total).times(100).floor()
 
@@ -68,7 +78,7 @@ export class PostgresGetUserBalanceRepository {
             expenses: _totalExpenses,
             investiments: _totalInvestiments,
             earningsPercentage,
-            expensesPrecentage,
+            expensesPercentage,
             investimentsPercentage,
             balance
         }
