@@ -73,12 +73,14 @@ describe('GetUserBalanceUseCase', () => {
         const { sut, getUserBalanceRepositoryStub } = makeSut()
         const executeSpy = jest.spyOn(getUserBalanceRepositoryStub, 'execute')
         const userId = faker.string.uuid()
+        const from = '2026-01-01'
+        const to = '2026-01-31'
 
         // act
-        await sut.execute(userId)
+        await sut.execute(userId, from, to)
 
         // assert
-        expect(executeSpy).toHaveBeenCalledWith(userId)
+        expect(executeSpy).toHaveBeenCalledWith(userId, from, to)
     })
 
     it('should throw if GetUserByIdRepository throws', async () => {
