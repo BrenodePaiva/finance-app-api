@@ -399,6 +399,21 @@
             }
         },
 
+        "/api/health": {
+            "get": {
+                "summary": "Check if the API is responding",
+                "tags": ["Health"],
+                "responses": {
+                    "200": {
+                        "description": "API is responding",
+                        "schema": {
+                            "$ref": "#/definitions/HealthResponse"
+                        }
+                    }
+                }
+            }
+        },
+
         "/api/transactions/me/{transactionId}": {
             "patch": {
                 "summary": "Update transaction by ID of the authenticated user",
@@ -495,6 +510,24 @@
     },
 
     "definitions": {
+        "HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "ok"
+                },
+                "uptime": {
+                    "type": "number",
+                    "example": 123.45
+                },
+                "timestamp": {
+                    "type": "string",
+                    "example": "2026-09-16T12:00:00.000Z"
+                }
+            }
+        },
+
         "User": {
             "type": "object",
             "properties": {
